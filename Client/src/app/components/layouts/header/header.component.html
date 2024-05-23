@@ -1,0 +1,19 @@
+<div class="main__content--header">
+  <div class="content__list">
+    <div class="logo__fpoly">
+      <a href="" routerLink="">
+        <img src={{logo}} alt="logo">
+      </a>
+    </div>
+    <ul class="list__item">
+      <li *ngFor="let itemName of listPagename">
+        <a href="" routerLink={{itemName.path}}>{{itemName.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <app-search />
+  <div class="btn-groups">
+    <register-button />
+    <login-button />
+  </div>
+</div>

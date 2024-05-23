@@ -1,0 +1,21 @@
+.search__header{
+display: flex;
+gap: 2px;
+}
+.search__header > button{
+  border: none;
+   padding: 5px 20px 5px 20px;
+   background-color: rgb(3, 130, 199);
+   color: #fff;
+   font-weight: bold;
+   border-radius:5px;
+
+}
+.search__header  > input {
+   padding: 5px 20px 5px 20px;
+   outline: none;
+   border-radius: 5px;
+   border: none;
+   border: 1px solid gray;
+}
+
