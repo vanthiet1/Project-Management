@@ -1,0 +1,16 @@
+.main__control--table {
+  display: flex;
+  padding: 10px;
+ gap: 20px;
+
+}
+
+.table__manager{
+  width: 20%;
+}
+.table__data{
+  width: 50%;
+}
+.table__member--control{
+  width: 30%;
+}

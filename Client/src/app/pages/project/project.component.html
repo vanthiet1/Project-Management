@@ -1,0 +1,105 @@
+<div class="main__project--team">
+  <h4>Project</h4>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Danh sách dự án</h2>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID Dự án</th>
+            <th>Tên Dự án</th>
+            <th>Ngày Bắt Đầu</th>
+            <th>Kích Thước Nhóm</th>
+            <th>Trạng thái dự án</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>project 1</td>
+            <td>20/2/3023</td>
+            <td>20</td>
+            <td>Đang thực hiện</td>
+            <td>
+              <button type="button" class="btn btn-primary" style="margin-inline: 5px;">
+                Sửa
+              </button>
+              <button type="button" class="btn btn-danger" style="margin-inline: 5px;">
+                Xóa
+              </button>
+              <button type="button" class="btn btn-success" style="margin-inline: 5px;">
+                Xác Nhận
+              </button>
+              <button type="button" class="btn btn-warning">
+                Hủy Dự Án
+              </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-success" (click)="showModalAddProject()">
+        Thêm Dự án Mới
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModal === true" class="modal__add--project">
+  <div id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="projectModalLabel">Thêm dự án mới</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="projectName">Tên Dự án</label>
+              <input type="text" class="form-control" id="projectName" />
+            </div>
+            <div class="form-group">
+              <label for="startDate">Ngày Bắt Đầu</label>
+              <input type="date" class="form-control" id="startDate" />
+            </div>
+            <div class="form-group">
+              <label for="teamSize">Kích Thước Nhóm</label>
+              <input type="number" class="form-control" id="teamSize" />
+            </div>
+
+            <div class="list__user--project">
+              <div
+                class="user"
+                *ngFor="let user of list"
+                [class.selected]="user.checked"
+                (click)="toggleUserSelection(user)"
+               >
+                <li >{{user.name}}</li>
+                <input
+                  type="checkbox"
+                  class="options__user"
+                  (click)="toggleUserSelection(user)"
+                  [checked]="user.checked"
+                  (click)="$event.stopPropagation()">
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button style="margin-inline: 5px;" type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="closeModalAddProject()">Đóng</button>
+          <button type="button" class="btn btn-primary">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

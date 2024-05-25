@@ -1,0 +1,21 @@
+
+.infomation__project > .title__information--project {
+  padding-block: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: #333;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+.title__information--project > h4{
+ color: #fff;
+}
+.infomation__project :is(.fee__project,.now__fee--project,.rest__fee--project) {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-block: 15px;
+}
+.infomation__project :is(.fee__project,.now__fee--project,.rest__fee--project) > span {
+ font-weight: bold;
+}

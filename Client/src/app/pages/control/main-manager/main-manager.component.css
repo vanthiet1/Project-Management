@@ -1,0 +1,19 @@
+.table__data--control{
+   width: 100%;
+   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+   background-color: #ebeaea;
+   padding: 10px;
+   border-radius:5px ;
+}
+.time__and__project{
+ display: flex;
+ justify-content: space-between;
+}
+
+.time__and__project > .time__option ,  .project__options , :is( select ){
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  width: 150px;
+  padding-block: 3px;
+}

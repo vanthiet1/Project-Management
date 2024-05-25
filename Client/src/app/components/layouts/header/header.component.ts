@@ -26,13 +26,10 @@ export class HeaderComponent implements OnInit {
       path: 'control',
     },
     {
-      name: 'Giới thiệu',
-      path: 'introduce',
-    },
-    {
       name: 'Dự Án',
       path: 'project',
     },
+   
 
 
   ];

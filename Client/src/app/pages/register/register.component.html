@@ -2,30 +2,30 @@
 <main class="container-fluid">
   <div class="row justify-content-center ">
     <div class="col-lg-6 col-md-6 col-lg-4 mt-4 mb-3 row">
-      <form onsubmit="return false" name="formRegister" action="" class=" row form p-4 border rounded m-auto bg-white ">
+      <form #registerForm name="formRegister" (ngSubmit)="submitRegister()" action="" class=" row form p-4 border rounded m-auto bg-white ">
         <div class="col-lg-6">
           <img width="100%" src="https://tinhhoa-aia.com.vn/wp-content/uploads/2022/06/Go%CC%A3i-dt.jpg" alt="">
         </div>
         <div class="col-lg-6">
           <h3 class="text-center">ĐĂNG KÝ</h3>
           <div class="form-group">
-            <input ng-model="fullname" name="fullname" ng-focus="showError1 = true" required type="text"
+            <input  name="fullname"  [(ngModel)]="user.fullname"  required type="text"
               class="form-control" placeholder="Họ tên">
             <span class="error" ng-show="showError1 && !formRegister.fullname.$valid">Họ tên không được để trống</span>
           </div>
           <div class="form-group">
-            <input ng-model="email" name="email" ng-focus="showError2 = true" required type="email" class="form-control"
+            <input  name="email"  [(ngModel)]="user.email" required type="email" class="form-control"
               placeholder="Email">
             <span class="error" ng-show="showError2 && !formRegister.email.$valid">Email không được để trống</span>
           </div>
           <div class="form-group">
-            <input ng-model="numberphone" name="numberphone" ng-focus="showError3 = true" required type="text"
+            <input  name="numberphone"  [(ngModel)]="user.phoneNumber"  required type="text"
               class="form-control" placeholder="Số điện thoại">
             <span class="error" ng-show="showError3 && !formRegister.numberphone.$valid">Số điện thoại không được để
               trống</span>
           </div>
           <div class="form-group">
-            <input ng-model="password" name="password" ng-focus="showError4 = true" required minlength="6"
+            <input ng-model="password" name="password"  [(ngModel)]="user.password"  required minlength="6"
               type="password" class="form-control" placeholder="Mật khẩu">
             <span class="error" ng-show="showError4 && !formRegister.password.$valid">Mật khẩu không được để trống hoặc
               dưới 6 ký tự</span>
@@ -36,7 +36,7 @@
             <span class="error" ng-show="showError5 && !formRegister.confirmPassword.$valid">Vui lòng nhập lại mật
               khẩu</span>
           </div>
-          <button class="btn btn-primary w-100 mt-2" ng-click="register()">Đăng ký</button>
+          <button class="btn btn-primary w-100 mt-2"  (click)="submitRegitser()">Đăng ký</button>
           <div class="d-flex justify-content-between">
             <a href="/login" routerlink="/login" class="mt-3 d-block text-center">Đăng nhập</a>
           </div>

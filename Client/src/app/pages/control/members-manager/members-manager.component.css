@@ -1,0 +1,67 @@
+.all__project{
+  height: 370px;
+  overflow: auto;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: #EBEAEA;
+  padding: 20px;
+
+}
+.all__project::-webkit-scrollbar {
+  width: 1px;
+}
+
+.all__project::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}
+
+.all__project::-webkit-scrollbar-thumb:hover {
+  background-color: #fff;
+}
+.title__information--project{
+  background-color: rgb(55, 117, 241);
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+}
+.title__information--project > h4{
+  color: #fff;
+}
+.name__project{
+  border: 1px solid gray;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.project{
+  background-color: #333333;
+  padding: 10px;
+  border-radius:5px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.member__working--project{
+  /* height: 0;
+  overflow: hidden; */
+
+}
+.member__working{
+  width: 95%;
+  margin: auto;
+  margin-block: 10px;
+}
+.member__working > .name__member{
+  background-color: #3775f1;
+  padding-block: 10px;
+  border-top-right-radius:5px;
+  border-top-left-radius:5px;
+  color: #fff;
+  padding: 5px;
+}
+.status__member{
+  border: 1px solid gray;
+  padding: 5px;
+  background-color: #fff;
+
+}

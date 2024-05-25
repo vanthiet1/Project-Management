@@ -13,13 +13,11 @@
             <input name="email" ng-model="email" ng-focus="showError1 = true" required type="email" class="form-control"
               placeholder="Email">
             <span class="error" ng-show="showError1 && formLogin.email.$error.required">Email không được để trống</span>
-            <span class="error" ng-show="showError1 && formLogin.email.$error.email">Email không đúng định dạng</span>
+
           </div>
           <div class="form-group">
             <input name="password" ng-model="password" ng-focus="showError2 = true" required minlength="6"
               type="password" class="form-control" placeholder="Mật khẩu">
-            <span class="error" ng-show="showError2 && formLogin.password.$error.required">Mật khẩu không được để
-              trống</span>
             <span class="error" ng-show="showError2 && formLogin.password.$error.minlength">Mật khẩu phải có ít nhất 6
               ký tự</span>
           </div>

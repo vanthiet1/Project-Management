@@ -1,0 +1,79 @@
+.table__information--control {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  height: auto;
+  padding: 5px;
+  width: 100%;
+  background-color: #ebeaea;
+}
+.table__information--control > .position {
+  background-color: rgb(55, 117, 241);
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+}
+.position > h4 {
+  color: #fff;
+}
+.avatar__leader {
+  width: 100%;
+}
+.avatar > img {
+  width: 15%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid red;
+  text-align: center;
+}
+.avatar__leader > span {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: red;
+}
+.information__team > span {
+  display: block;
+   font-size: 1.1rem;
+   font-weight: 600;
+}
+.avatar {
+  display: flex;
+  justify-content: center;
+  padding-block: 10px;
+}
+.information__team {
+  padding: 10px;
+}
+
+  :is(
+    .total__price--project,
+    .quantity__member,
+    .task__processing,
+    .project__deloyed,
+    .customer__project,
+  ) {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding: 10px;
+  background-color: #fff;
+  margin-block: 2px;
+}
+
+.quantity__member {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.project__deloyed {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.customer__control{
+  padding: 10px;
+}
+.customer__control > span{
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
