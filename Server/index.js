@@ -11,10 +11,14 @@ app.use(bodyParser.json());
 app.use(morgan('combined'))
 
 connectDB()
+const userRouter = require('./routers/user/userRouter')
+
 
 app.get('/',(req,res)=>{
     res.send('hello word')
 })
+
+app.use('/api/v1/auth/',userRouter)
 
 
 const PORT =  process.env.PORT || 8000

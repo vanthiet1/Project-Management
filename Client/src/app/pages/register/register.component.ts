@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../components/layouts/header/header.component';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -10,15 +12,27 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  user = {
+  dataUserRegister  = {
     fullname:'',
     email: '',
     phoneNumber:'',
     password:'',
   }
-  submitRegister(){
-  }
-  submitRegitser(){
-    console.log(this.user);
+  constructor(private authService: AuthService , private toastr: ToastrService) {}
+  submitRegistser() {
+    try {
+      this.authService.register(this.dataUserRegister).subscribe(
+        response => {
+          console.log('Đăng ký thành công', response);
+          this.toastr.success('Registration successful', 'Success');
+        },
+        error => {
+          console.error('Registration failed', error);
+        }
+      );
+    } catch (error) {
+      console.error('An error occurred during registration', error);
+    }
+
   }
 }

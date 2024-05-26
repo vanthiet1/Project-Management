@@ -36,7 +36,7 @@ cursor: pointer;
 color: #ffffff;
 }
 .user.selected {
-  background-color: rgb(37, 122, 241);
+  background-color: #0075ff;
   color: #fff;
 
 }
