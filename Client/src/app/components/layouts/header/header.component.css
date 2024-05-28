@@ -30,5 +30,20 @@ align-items: center;
   align-items: center;
   gap: 5px;
 }
+.logoutUser{
+   cursor: pointer;
+  font-weight: bold;
+}
+.userLogin{
+  display: flex;
+   align-items: center;
+   gap: 10px;
+}
+.roles__user{
+   cursor: pointer;
+  color: red;
+  font-weight: bold;
+   font-size: 1.3rem;
+}
 
 

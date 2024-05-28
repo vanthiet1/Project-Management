@@ -18,10 +18,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>id</td>
-            <td>project 1</td>
-            <td>20/2/3023</td>
+          <tr *ngFor="let projectsItem of projects">
+            <td>{{projectsItem._id}}</td>
+            <td>{{projectsItem.nameProject}}</td>
+            <td>{{projectsItem._id}}</td>
             <td>20</td>
             <td>Đang thực hiện</td>
             <td>
@@ -37,16 +37,13 @@
               <button type="button" class="btn btn-warning">
                 Hủy Dự Án
               </button>
-
             </td>
           </tr>
         </tbody>
       </table>
-
       <button type="button" class="btn btn-success" (click)="showModalAddProject()">
         Thêm Dự án Mới
       </button>
-
     </div>
   </div>
 </div>
@@ -72,7 +69,6 @@
               <label for="teamSize">Kích Thước Nhóm</label>
               <input type="number" class="form-control" id="teamSize" />
             </div>
-
             <div class="list__user--project">
               <div
                 class="user"
@@ -89,8 +85,6 @@
                   (click)="$event.stopPropagation()">
               </div>
             </div>
-
-
           </form>
         </div>
         <!-- Modal Footer -->

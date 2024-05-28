@@ -3,7 +3,6 @@ import { HeaderComponent } from '../../components/layouts/header/header.componen
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -18,21 +17,19 @@ export class RegisterComponent {
     phoneNumber:'',
     password:'',
   }
-  constructor(private authService: AuthService , private toastr: ToastrService) {}
+  constructor(private authService: AuthService ) {}
   submitRegistser() {
     try {
       this.authService.register(this.dataUserRegister).subscribe(
         response => {
           console.log('Đăng ký thành công', response);
-          this.toastr.success('Registration successful', 'Success');
         },
         error => {
-          console.error('Registration failed', error);
+          console.error('Đăng ký thất bại', error);
         }
       );
     } catch (error) {
       console.error('An error occurred during registration', error);
     }
-
   }
 }

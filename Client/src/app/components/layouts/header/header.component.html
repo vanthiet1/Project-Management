@@ -12,8 +12,19 @@
     </ul>
   </div>
   <app-search />
-  <div class="btn-groups">
-    <register-button />
-    <login-button />
-  </div>
+
+    <div *ngIf="isLogin" class="userLogin">
+      <span>{{userInfo?.fullname}}</span>
+      <span class="logoutUser" (click)="logout()">Đăng xuất</span>
+      <div *ngIf="isAdmin" class="roles__user">
+        <span>admin</span>
+      </div>
+    </div>
+    <div *ngIf="!isLogin" class="btn-groups">
+      <register-button></register-button>
+      <login-button></login-button>
+    </div>
+
+
+
 </div>

@@ -5,14 +5,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/v1';
+  private URL_API  = 'http://localhost:8080/api/v1';
   constructor(private http: HttpClient) {}
 
   register(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/register`, data);
+    return this.http.post<any>(`${this.URL_API}/user/register`, data);
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/auth/login`, { email, password });
+  login(data:object): Observable<any> {
+    return this.http.post<any>(`${this.URL_API}/user/login`, data);
   }
+  
 }

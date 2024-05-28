@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProjectService } from '../../services/project/project-list.service';
 @Component({
   selector: 'app-project',
   standalone: true,
@@ -8,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
 })
-export class ProjectComponent {
+export class ProjectComponent implements OnInit  {
   showModal = false;
   list = [
     { id: 1, name: 'User 1', checked: false },
@@ -29,4 +30,19 @@ export class ProjectComponent {
   closeModalAddProject(){
     this.showModal = false
   }
+  projects: any[] = [];
+  constructor(private projectService: ProjectService) {}
+  ngOnInit(): void {
+    this.projectService.fetchComments().subscribe(
+      (data) => {
+        this.projects = data;
+        console.log(data);
+
+      },
+      (error) => {
+        console.error('Error fetching projects:', error);
+      }
+    );
+  }
+
 }

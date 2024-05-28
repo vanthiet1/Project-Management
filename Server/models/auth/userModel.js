@@ -21,7 +21,6 @@ const UserSchema = mongoose.Schema(
      statusWorking: {
         type: Boolean,
         default: true,
-      
     },
      status: {
         type: Boolean,
