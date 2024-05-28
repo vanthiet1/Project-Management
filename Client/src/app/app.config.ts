@@ -8,6 +8,7 @@ import { importProvidersFrom } from '@angular/core';
 // share service
 import { SharedPathService } from './services/shares/shared-path.service';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),

@@ -21,14 +21,14 @@
           <tr *ngFor="let projectsItem of projects">
             <td>{{projectsItem._id}}</td>
             <td>{{projectsItem.nameProject}}</td>
-            <td>{{projectsItem._id}}</td>
-            <td>20</td>
-            <td>Đang thực hiện</td>
+            <td>{{projectsItem.dayStart.split('T')[0] | date:'yyyy-MM-dd'}}</td>
+            <td>{{projectsItem.sizeTeam}}</td>
+            <td>{{projectsItem.statusProject ? "Đang thực hiện" : "Tạm ngưng" }}</td>
             <td>
               <button type="button" class="btn btn-primary" style="margin-inline: 5px;">
                 Sửa
               </button>
-              <button type="button" class="btn btn-danger" style="margin-inline: 5px;">
+              <button type="button" class="btn btn-danger" style="margin-inline: 5px;" (click)="deleteProject(projectsItem._id)">
                 Xóa
               </button>
               <button type="button" class="btn btn-success" style="margin-inline: 5px;">
