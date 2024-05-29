@@ -43,3 +43,13 @@ color: #ffffff;
 .options__user{
   width: 50px;
 }
+.text-success {
+  color: rgb(78, 255, 78);
+  font-weight: bold;
+}
+
+.text-danger {
+  color: red;
+  font-weight: bold;
+
+}

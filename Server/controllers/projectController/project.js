@@ -31,11 +31,12 @@ const projectController = {
             const newProject = new ProjectModel(
                 {
                     nameProject: nameProject,
-                    dayStart: new Date(dayStart),
+                    dayStart: dayStart,
                     sizeTeam: sizeTeam,
                     teamProject: teamProject
                 }
             )
+            console.log(newProject);
             const saveProject = await newProject.save();
             res.status(201).json({ success: true, message: 'Thêm dự án thành công', saveProject })
         } catch (error) {

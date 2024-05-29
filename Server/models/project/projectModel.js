@@ -11,7 +11,7 @@ const ProjectSchema = mongoose.Schema(
         required:true,
      },
      sizeTeam:{
-        type:String,
+        type:Number,
         required:true,
      },
    

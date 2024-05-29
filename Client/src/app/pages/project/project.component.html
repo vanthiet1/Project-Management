@@ -23,51 +23,53 @@
             <td>{{projectsItem.nameProject}}</td>
             <td>{{projectsItem.dayStart.split('T')[0] | date:'yyyy-MM-dd'}}</td>
             <td>{{projectsItem.sizeTeam}}</td>
-            <td>{{projectsItem.statusProject ? "Đang thực hiện" : "Tạm ngưng" }}</td>
+            <td [ngClass]="{'text-success': projectsItem.statusProject, 'text-danger': !projectsItem.statusProject}">
+              {{projectsItem.statusProject ? "Đang thực hiện" : "Tạm ngưng" }}
+            </td>
             <td>
-              <button type="button" class="btn btn-primary" style="margin-inline: 5px;">
+              <button type="button" class="btn btn-primary" style="margin-inline: 5px;" (click)="openModalForEdit(projectsItem)">
                 Sửa
               </button>
               <button type="button" class="btn btn-danger" style="margin-inline: 5px;" (click)="deleteProject(projectsItem._id)">
                 Xóa
               </button>
-              <button type="button" class="btn btn-success" style="margin-inline: 5px;">
+              <button type="button" class="btn btn-success" style="margin-inline: 5px;" (click)="confirmProject(projectsItem._id)">
                 Xác Nhận
               </button>
-              <button type="button" class="btn btn-warning">
+              <button type="button" class="btn btn-warning" (click)="cancelProject(projectsItem._id)">
                 Hủy Dự Án
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-success" (click)="showModalAddProject()">
+      <button type="button" class="btn btn-success" (click)="showForm()">
         Thêm Dự án Mới
       </button>
     </div>
   </div>
 </div>
 
-<div *ngIf="showModal === true" class="modal__add--project">
+<div *ngIf="showModal" class="modal__add--project">
   <div id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="projectModalLabel">Thêm dự án mới</h5>
+          <h5 class="modal-title" id="projectModalLabel">{{ isEditing ? 'Sửa dự án' : 'Thêm dự án mới' }}</h5>
         </div>
         <div class="modal-body">
           <form>
             <div class="form-group">
               <label for="projectName">Tên Dự án</label>
-              <input type="text" class="form-control" id="projectName" />
+              <input type="text" class="form-control" id="projectName" [(ngModel)]="projectName" name="projectName" />
             </div>
             <div class="form-group">
               <label for="startDate">Ngày Bắt Đầu</label>
-              <input type="date" class="form-control" id="startDate" />
+              <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate" />
             </div>
             <div class="form-group">
               <label for="teamSize">Kích Thước Nhóm</label>
-              <input type="number" class="form-control" id="teamSize" />
+              <input type="number" class="form-control" id="teamSize" [(ngModel)]="teamSize" name="teamSize" />
             </div>
             <div class="list__user--project">
               <div
@@ -76,22 +78,20 @@
                 [class.selected]="user.checked"
                 (click)="toggleUserSelection(user)"
                >
-                <li >{{user.name}}</li>
+                <li>{{ user.fullname }}</li>
                 <input
                   type="checkbox"
                   class="options__user"
-                  (click)="toggleUserSelection(user)"
                   [checked]="user.checked"
-                  (click)="$event.stopPropagation()">
+                  (click)="toggleUserSelection(user); $event.stopPropagation();">
               </div>
             </div>
           </form>
         </div>
-        <!-- Modal Footer -->
         <div class="modal-footer">
           <button style="margin-inline: 5px;" type="button" class="btn btn-secondary" data-dismiss="modal"
-            (click)="closeModalAddProject()">Đóng</button>
-          <button type="button" class="btn btn-primary">Lưu</button>
+            (click)="closeModal()">Đóng</button>
+          <button type="button" class="btn btn-primary" (click)="addProject()">{{ isEditing ? 'Cập nhật' : 'Lưu' }}</button>
         </div>
       </div>
     </div>
