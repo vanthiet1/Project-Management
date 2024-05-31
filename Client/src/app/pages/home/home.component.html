@@ -1,3 +1,32 @@
-<div class="main__my--project">
-  <h4>Dự án đang nhận của tôi</h4>
+<div class="container mt-5">
+  <h4 class="fw-bold">Dự án đang nhận của tôi</h4>
+  <div class="list-group" *ngIf="memberProject.employeeProjects?.length">
+    <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
+      *ngFor="let project of memberProject.employeeProjects">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"><strong>{{ project.nameProject }}</strong></h5>
+        <small class="text-muted">{{ project.dayStart | date: 'dd/MM/yyyy' }}</small>
+      </div>
+      <p class="mb-1">
+        Trạng thái:
+        <span class=" text-success" [ngClass]="{
+            'badge-success': project.statusProject,
+            'badge-danger': !project.statusProject
+          }">{{ project.statusProject ? 'Đang hoạt động' : 'Đã kết thúc' }}</span>
+      </p>
+
+      <div class="d-flex justify-content-end gap-2">
+        <div *ngIf="isAdmin"> 
+          <button class="btn btn-success">Thêm Task</button>
+        </div>
+        <div *ngIf="!isAdmin">
+          <button class="btn btn-success">Xem Task</button>
+        </div>
+        <button class="btn btn-warning">Rời dự án</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!memberProject.employeeProjects?.length">
+    <p>Không có dự án nào được nhận.</p>
+  </div>
 </div>

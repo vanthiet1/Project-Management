@@ -13,8 +13,6 @@ const memberProjectController = {
         }
     },
 
-
-
     getInforProjectMember: async (req, res) => {
         try {
             const { id } = req.params;
@@ -28,6 +26,28 @@ const memberProjectController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
+    },
+    leaveProject: async(req,res)=>{
+         try {
+            const { userId, projectId } = req.params;
+            const memberProject = await MemberProject.findOne({ employeeId: userId });
+            if (!memberProject) {
+                return res.status(404).json({ message: 'User not found in projects' });
+              }
+              memberProject.employeeProjects = memberProject.employeeProjects.filter(
+                (project) => project.toString() !== projectId
+              );
+              if (memberProject.employeeProjects.length === 0) {
+                await memberProject.remove();
+              } else {
+                await memberProject.save();
+              }
+        
+              res.status(200).json({ message: 'Successfully left project' });
+         } catch (error) {
+            res.status(500).json({ message: error.message });
+         }
     }
+
 }
 module.exports = memberProjectController;

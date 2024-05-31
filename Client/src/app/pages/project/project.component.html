@@ -24,7 +24,7 @@
             <td>{{projectsItem.dayStart.split('T')[0] | date:'yyyy-MM-dd'}}</td>
             <td>{{projectsItem.sizeTeam}}</td>
             <td [ngClass]="{'text-success': projectsItem.statusProject, 'text-danger': !projectsItem.statusProject}">
-              {{projectsItem.statusProject ? "Đang thực hiện" : "Tạm ngưng" }}
+              {{projectsItem.statusProject ? "Đang thực hiện" : "Ngưng dự án" }}
             </td>
             <td>
               <button type="button" class="btn btn-primary" style="margin-inline: 5px;" (click)="openModalForEdit(projectsItem)">
