@@ -1,17 +1,17 @@
 const ProjectModel = require('../../models/project/projectModel');
-
+const MemberProject = require('../../models/project/memberProject');
 const projectController = {
     // get all
     getAllProject: async (req, res) => {
         try {
-            const allProject = await ProjectModel.find({});
+            const allProject = await ProjectModel.find()
+            .populate('teamProject', 'fullname statusWorking') 
             res.status(200).json(allProject);
         } catch (error) {
             res.status(500).json({ message: "lỗi server" });
         }
     },
     // get an
-  
     getAnProject: async(req, res)=> {
         try {
             const {id} = req.params;
@@ -36,8 +36,16 @@ const projectController = {
                     teamProject: teamProject
                 }
             )
-            console.log(newProject);
             const saveProject = await newProject.save();
+
+            for (let userId of teamProject) {
+                await MemberProject.findOneAndUpdate(
+                    { employeeId: userId },
+                    { $push: { employeeProjects: saveProject._id } },
+                    { upsert: true, new: true } 
+                );
+            }
+
             res.status(201).json({ success: true, message: 'Thêm dự án thành công', saveProject })
         } catch (error) {
             console.log(error);
@@ -59,7 +67,18 @@ const projectController = {
           if (!updateProject) {
             return res.status(404).json({ success: false, message: "Project not found" });
           }
-      
+          await MemberProject.updateMany(
+            { employeeProjects: id },
+            { $pull: { employeeProjects: id } }
+        );
+
+        await Promise.all(teamProject.map(async (memberId) => {
+            await MemberProject.findOneAndUpdate(
+                { employeeId: memberId },
+                { $addToSet: { employeeProjects: id } }, 
+                { upsert: true } 
+            );
+        }));
           res.status(200).json({ success: true, message: 'Dự án cập nhật thành công', updateProject });
         } catch (error) {
           res.status(500).json({ message: error.message });
@@ -74,6 +93,14 @@ const projectController = {
                 return res.status(403).json({ message: "Không tm  thấy id dự án" })
             }
             await ProjectModel.findByIdAndDelete(id)
+            await MemberProject.updateMany(
+                { employeeProjects: id },
+                { $pull: { employeeProjects: id } }
+            );
+            // nếu như nhân viên chỉ có 1 dự án mà xóa thì xóa nhân viên đó ra khỏi bảng
+            await MemberProject.deleteMany(
+                { employeeProjects: { $size: 0 } }
+            );
             res.status(200).json({ success:true , message: "Xóa thàh công" })
         } catch (error) {
             res.status(500).json({ success:false , message: error.message });

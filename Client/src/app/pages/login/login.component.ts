@@ -25,7 +25,6 @@ export class LoginComponent {
     try {
       this.authService.login(this.dataUserLogin).subscribe(
         (response) => {
-          console.log('Đăng nhập thành công', response);
           const accessToken = response.accessToken;
           if (typeof window !== 'undefined' && window.localStorage) {
             localStorage.setItem('accessToken', accessToken);

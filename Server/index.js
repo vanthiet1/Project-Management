@@ -12,8 +12,10 @@ app.use(morgan('combined'))
 
 connectDB()
 const userRouter = require('./routers/user/userRouter');
-const authRouter = require('./routers/auth/authRouter')
-const projectRouter = require('./routers/project/projectRouter')
+const authRouter = require('./routers/auth/authRouter');
+const projectRouter = require('./routers/project/projectRouter');
+const memberProjectRouter = require('./routers/project/memberProjectRouter');
+
 
 
 
@@ -24,6 +26,8 @@ app.get('/',(req,res)=>{
 app.use('/api/v1/user/',userRouter)
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/project', projectRouter);
+app.use('/api/v1/member/project', memberProjectRouter);
+
 
 
 const PORT =  process.env.PORT || 8000

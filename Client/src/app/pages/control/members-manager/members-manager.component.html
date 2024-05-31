@@ -3,41 +3,23 @@
 </div>
 <div class="all__project">
   <div class="name__project">
-    <div class="project">
-      <span>Dự án 1</span>
-    </div>
-    <div class="member__working--project">
-      <div class="member__working">
-        <div class="name__member">
-          <span>Thành viên 1</span>
-        </div>
-        <div class="status__member">
-          <span>Có mặt</span>
+
+    <div class="project" *ngFor="let project of projects">
+      <span>{{project.nameProject}}</span>
+      <div class="member__working--project" *ngFor="let member of project.teamProject">
+        <div class="member__working">
+          <div class="name__member">
+            <span>{{member.fullname}}</span>
+          </div>
+          <div class="status__member" >
+            <span [ngClass]="{'working': member.statusWorking, 'not-working': !member.statusWorking}">{{ member.statusWorking ? "Đang làm việc" : "Không làm việc"}}</span>
+          </div>
         </div>
       </div>
+    </div>
 
-    </div>
-  </div>
 
-  <div class="name__project">
-    <div class="project">
-      <span>Dự án 2</span>
-    </div>
-  </div>
-  <div class="name__project">
-    <div class="project">
-      <span>Dự án 3</span>
-    </div>
-  </div>
-  <div class="name__project">
-    <div class="project">
-      <span>Dự án 4</span>
-    </div>
-  </div>
-  <div class="name__project">
-    <div class="project">
-      <span>Dự án 5</span>
-    </div>
+
   </div>
 </div>
 

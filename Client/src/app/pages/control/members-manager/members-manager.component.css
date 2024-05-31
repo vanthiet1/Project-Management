@@ -29,7 +29,6 @@
   color: #fff;
 }
 .name__project{
-  border: 1px solid gray;
   margin-top: 20px;
   border-radius: 5px;
 }
@@ -39,8 +38,19 @@
   border-radius:5px;
   cursor: pointer;
   color: #fff;
+  margin-bottom:10px ;
+
+}
+.status__member > .working {
+  color: green;
+  font-weight: bold;
 }
 
+.status__member > .not-working {
+  color: red;
+  font-weight: bold;
+
+}
 .member__working--project{
   /* height: 0;
   overflow: hidden; */

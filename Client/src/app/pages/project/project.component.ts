@@ -23,7 +23,7 @@ export class ProjectComponent implements OnInit {
   projectName: string = '';
   startDate: string = '';
   teamSize: number = 0;
-  list: Array<{ fullname: string; checked: boolean; _id: string }> = [];
+  list: Array<{ fullname: string; checked: boolean; _id: string; statusWorking:boolean }> = [];
   projects: any[] = [];
   selectedUsers: any[] = [];
 
@@ -194,8 +194,10 @@ export class ProjectComponent implements OnInit {
     this.projectName = project.nameProject;
     this.startDate = new Date(project.dayStart).toISOString().split('T')[0];
     this.teamSize = project.sizeTeam;
+
+    const projectTeamIds = project.teamProject.map((member: any) => member._id);
     this.list.forEach(user => {
-      user.checked = project.teamProject.includes(user._id);
+      user.checked = projectTeamIds.includes(user._id);
     });
     this.showModal = true;
   }

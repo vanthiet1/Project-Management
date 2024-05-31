@@ -11,10 +11,4 @@ router.put('/confirm/:id',ProjectController.confirmProject);
 router.put('/:id',ProjectController.updateProject);
 
 
-
-
-
-
-
-
 module.exports = router

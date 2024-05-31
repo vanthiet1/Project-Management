@@ -17,5 +17,10 @@ gap: 2px;
    border-radius: 5px;
    border: none;
    border: 1px solid gray;
+   width: 400px;
+
+}
+.search__header  > input:focus{
+  border: 2px solid green;
 }
 

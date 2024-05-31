@@ -3,6 +3,8 @@ import { HeaderComponent } from '../../components/layouts/header/header.componen
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -17,12 +19,16 @@ export class RegisterComponent {
     phoneNumber:'',
     password:'',
   }
-  constructor(private authService: AuthService ) {}
+  constructor(private authService: AuthService , private router: Router) {}
   submitRegistser() {
     try {
       this.authService.register(this.dataUserRegister).subscribe(
         response => {
-          console.log('Đăng ký thành công', response);
+          if(!response){
+            return;
+          }
+           alert("Đăng ký thành công")
+           this.router.navigate(['/login'])
         },
         error => {
           console.error('Đăng ký thất bại', error);

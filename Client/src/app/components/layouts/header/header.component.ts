@@ -36,10 +36,7 @@ export class HeaderComponent implements OnInit {
       name: 'Quản lí dự án foply',
       path: '',
     },
-    {
-      name: 'Bảng Điều Khiển',
-      path: 'control',
-    },
+
     {
       name: 'Dự Án',
       path: 'project',
@@ -73,6 +70,13 @@ export class HeaderComponent implements OnInit {
         this.userInfo = data;
         this.isLogin = true;
         this.isAdmin = data.roles.includes('admin');
+       if(this.isAdmin){
+         this.listPagename.push(  {
+          name: 'Bảng Điều Khiển',
+          path: 'control',
+        },)
+       }
+
       },
       (error: any) => {
         console.error('Failed to fetch user info', error);

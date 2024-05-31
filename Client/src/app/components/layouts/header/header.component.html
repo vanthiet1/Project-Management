@@ -14,10 +14,10 @@
   <app-search />
 
     <div *ngIf="isLogin" class="userLogin">
-      <span>{{userInfo?.fullname}}</span>
+      <span class="fullname">{{userInfo?.fullname}}</span>
       <span class="logoutUser" (click)="logout()">Đăng xuất</span>
       <div *ngIf="isAdmin" class="roles__user">
-        <span>admin</span>
+        <a href="" routerLink="admin">Admin</a>
       </div>
     </div>
     <div *ngIf="!isLogin" class="btn-groups">
