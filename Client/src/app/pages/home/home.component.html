@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h4 class="fw-bold">Dự án đang nhận của tôi</h4>
+  <h4 class="fw-bold">{{isAdmin ? "Thêm task cho nhân viên" : "Dự án của tôi"}}</h4>
   <div class="list-group" *ngIf="memberProject.employeeProjects?.length">
     <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
       *ngFor="let project of memberProject.employeeProjects">
@@ -16,13 +16,15 @@
       </p>
 
       <div class="d-flex justify-content-end gap-2">
-        <div *ngIf="isAdmin"> 
+        <div *ngIf="isAdmin">
           <button class="btn btn-success">Thêm Task</button>
         </div>
         <div *ngIf="!isAdmin">
           <button class="btn btn-success">Xem Task</button>
         </div>
-        <button class="btn btn-warning">Rời dự án</button>
+        <div *ngIf="!isAdmin">
+          <button class="btn btn-warning">Rời dự án</button>
+        </div>
       </div>
     </div>
   </div>
