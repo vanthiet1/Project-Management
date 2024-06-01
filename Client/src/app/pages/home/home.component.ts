@@ -19,12 +19,17 @@ export class HomeComponent implements OnInit {
     private authService: AuthInterceptorService
   ) {}
 
-  memberProject:any= {};
+  memberDetailProject:any= {};
+  memberAllProject:any[]= [];
+
   userId: any;
   isAdmin:any;
 
   ngOnInit(): void {
     this.loadUserInfo();
+  this.fetchDataMemberProject()
+  this.fetchDataMemberAllProject()
+
   }
 
   loadUserInfo() {
@@ -46,15 +51,38 @@ export class HomeComponent implements OnInit {
       console.error('Không có id user');
       return;
     }
-
     this.memberProjectService.getMemberProjectDetail(this.userId).subscribe({
       next: (data) => {
-        console.log(data);
-        this.memberProject = data;
+        this.memberDetailProject = data;
       },
       error: (err) => {
         console.log(err);
       },
     });
+  }
+  fetchDataMemberAllProject() {
+    this.memberProjectService.getMemberAllProject().subscribe({
+      next: (data) => {
+        this.memberAllProject = data;
+        console.log(this.memberAllProject);
+
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  leaveProject(projectId:string){
+      this.memberProjectService.leaveProject(this.userId,projectId).subscribe({
+        next: (res)=>{
+          if(!projectId){
+            return;
+          }
+           this.memberDetailProject.employeeProjects = this.memberDetailProject.employeeProjects.filter( (project:any)=> project._id !== projectId)
+           this.fetchDataMemberProject()
+
+        }
+      })
   }
 }

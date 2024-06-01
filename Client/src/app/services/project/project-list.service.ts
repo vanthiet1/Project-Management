@@ -13,6 +13,7 @@ export class ProjectService {
   fetchDataProject(): Observable<any> {
     return this.http.get<any>(`${this.URL_API}/project`);
   }
+
   postProject(data:any):Observable<any> {
     return this.http.post<any>(`${this.URL_API}/project`,data);
   }

@@ -1,4 +1,5 @@
 const MemberProject = require('../../models/project/memberProject');
+const ProjectModel = require('../../models/project/projectModel');
 
 const memberProjectController = {
 
@@ -36,13 +37,14 @@ const memberProjectController = {
               }
               memberProject.employeeProjects = memberProject.employeeProjects.filter(
                 (project) => project.toString() !== projectId
-              );
-              if (memberProject.employeeProjects.length === 0) {
-                await memberProject.remove();
-              } else {
-                await memberProject.save();
-              }
-        
+              ); 
+              
+            await memberProject.save();
+          
+
+              await ProjectModel.findByIdAndUpdate(projectId, {
+                $pull: { teamProject: memberProject.employeeId }
+              });
               res.status(200).json({ message: 'Successfully left project' });
          } catch (error) {
             res.status(500).json({ message: error.message });

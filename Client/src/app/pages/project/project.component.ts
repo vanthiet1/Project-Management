@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   isEditing: boolean = false;
   editingProjectId: string | null = null;
   //
+  //  định nghĩa trước biến đẻ lưu dữ liệu
   projectName: string = '';
   startDate: string = '';
   teamSize: number = 0;
@@ -34,6 +35,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
+    //
     private authService: AuthInterceptorService,
     private isLoginService: IsLoginService,
     private router: Router
@@ -86,7 +88,6 @@ export class ProjectComponent implements OnInit {
       },
     });
   }
-
   loadUsers() {
     this.projectService.getAllUser().subscribe(
       (users) => {
@@ -102,7 +103,8 @@ export class ProjectComponent implements OnInit {
   }
 
   deleteProject(id: string): void {
-    if (!this.isLoginService.isLogin()) {
+    if (!this.isLoginService.isLogin() || !this.isAdmin) {
+      alert("Bạn không có quyền xóa dự án")
       return;
     } else {
       this.projectService.deleteProject(id).subscribe({
@@ -117,7 +119,8 @@ export class ProjectComponent implements OnInit {
   }
 
   cancelProject(id: string): void {
-    if (!this.isLoginService.isLogin()) {
+    if (!this.isLoginService.isLogin() || !this.isAdmin ) {
+      alert("Bạn không có quyền hủy dự án")
       return;
     } else {
       this.projectService.cancelProject(id).subscribe(() => {
@@ -127,7 +130,8 @@ export class ProjectComponent implements OnInit {
   }
 
   confirmProject(id: string): void {
-    if (!this.isLoginService.isLogin()) {
+    if (!this.isLoginService.isLogin() || !this.isAdmin) {
+      alert("Bạn không có quyền xác nhận dự án")
       return;
     } else {
       this.projectService.confirmProject(id).subscribe(() => {
@@ -149,7 +153,8 @@ export class ProjectComponent implements OnInit {
   }
 
   addProject() {
-    if (!this.isLoginService.isLogin()) {
+      if (!this.isLoginService.isLogin() || !this.isAdmin ) {
+        alert("Bạn là nhân viên không thể thêm dự án")
       return;
     } else {
       const selectedUsers = this.list

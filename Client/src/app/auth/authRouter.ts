@@ -21,7 +21,10 @@ export class CanactiveData implements CanActivate {
     return new Observable<boolean>((observer) => {
       this.authService.getUserInfo().subscribe(
         (data: any) => {
+          console.log(data);
           const isAdmin = data.roles.includes('admin');
+            console.log(isAdmin);
+
           if (isAdmin) {
             observer.next(true);
             observer.complete();

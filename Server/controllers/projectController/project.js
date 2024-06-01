@@ -84,7 +84,6 @@ const projectController = {
           res.status(500).json({ message: error.message });
         }
       },
-
     // delete
     deleteProject: async (req, res) => {
         try {

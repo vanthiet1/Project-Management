@@ -13,5 +13,11 @@ export class MemberProjectService {
   getMemberProjectDetail(id:string): Observable<any> {
     return this.http.get<any>(`${this.URL_API}/member/project/${id}`,{});
   }
+  getMemberAllProject(): Observable<any> {
+    return this.http.get<any>(`${this.URL_API}/member/project`);
+  }
+  leaveProject(userId: string, projectId: string): Observable<any> {
+    return this.http.delete<any>(`${this.URL_API}/member/project/${userId}/${projectId}`);
+  }
 
 }
