@@ -14,6 +14,10 @@ const ProjectSchema = mongoose.Schema(
         type:Number,
         required:true,
      },
+     feeProject:{
+        type:Number,
+        required:true,
+     },
    
    teamProject:[
         { 
@@ -21,6 +25,12 @@ const ProjectSchema = mongoose.Schema(
            ref: 'User' 
        }
      ],
+     tasks: [
+      {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'TaskMember',
+      }
+  ],
      statusProject: {
         type: Boolean,
         default: true,

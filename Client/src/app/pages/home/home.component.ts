@@ -5,7 +5,8 @@ import { HeaderComponent } from '../../components/layouts/header/header.componen
 import { NavigationComponent } from '../../components/layouts/navigation/navigation.component';
 import { MemberProjectService } from '../../services/memberProject/member-project.service';
 import { AuthInterceptorService } from '../../services/auth/auth-interceptor.service';
-
+import { ProjectService } from '../../services/project/project-list.service';
+import { TaskProjectService } from '../../services/task/task.service';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -16,27 +17,37 @@ import { AuthInterceptorService } from '../../services/auth/auth-interceptor.ser
 export class HomeComponent implements OnInit {
   constructor(
     private memberProjectService: MemberProjectService,
-    private authService: AuthInterceptorService
+    private authService: AuthInterceptorService,
+    private projectService: ProjectService,
+    private taskProjectService: TaskProjectService
   ) {}
 
-  memberDetailProject:any= {};
-  memberAllProject:any[]= [];
+  showMemberProject:boolean = false;
+
+  memberDetailProject: any = {};
+  memberAllProject: any[] = [];
+  memberInProject: any[] = [];
+  statusWorking:boolean | undefined;
+  nameProject:string | undefined
 
   userId: any;
-  isAdmin:any;
+  isAdmin: any;
+  taskProject:any[] = [];
+  memberClaimTask:any[] = [];
 
+  formShowTask:boolean = false;
+  idProject: any;
   ngOnInit(): void {
     this.loadUserInfo();
-  this.fetchDataMemberProject()
-  this.fetchDataMemberAllProject()
-
+    this.fetchDataMemberProject();
+    this.fetchDataMemberAllProject();
   }
 
   loadUserInfo() {
     this.authService.getUserInfo().subscribe(
       (data: any) => {
         this.userId = data?._id;
-        this.isAdmin = data.roles.includes("admin");
+        this.isAdmin = data.roles.includes('admin');
         this.fetchDataMemberProject();
       },
 
@@ -63,9 +74,12 @@ export class HomeComponent implements OnInit {
   fetchDataMemberAllProject() {
     this.memberProjectService.getMemberAllProject().subscribe({
       next: (data) => {
-        this.memberAllProject = data;
-        console.log(this.memberAllProject);
+        //  data.map((idProject:any)=>{
+        //    this.idProject = idProject.employeeProjects
+        //    console.log( this.idProject);
 
+        // })
+        this.memberAllProject = data;
       },
       error: (err) => {
         console.log(err);
@@ -73,16 +87,56 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  leaveProject(projectId:string){
-      this.memberProjectService.leaveProject(this.userId,projectId).subscribe({
-        next: (res)=>{
-          if(!projectId){
-            return;
-          }
-           this.memberDetailProject.employeeProjects = this.memberDetailProject.employeeProjects.filter( (project:any)=> project._id !== projectId)
-           this.fetchDataMemberProject()
-
-        }
-      })
+  showMemberInProject(projectId:any) {
+    this.projectService.fetchDataDeltaiProject(projectId).subscribe({
+      next: (data) => {
+        this.memberInProject = data?.anProject?.teamProject
+        this.nameProject = data?.anProject?.nameProject
+        this.showMemberProject  = true
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
+
+  leaveProject(projectId: string) {
+    this.memberProjectService.leaveProject(this.userId, projectId).subscribe({
+      next: (res) => {
+        if (!projectId) {
+          return;
+        }
+        this.memberDetailProject.employeeProjects =
+          this.memberDetailProject.employeeProjects.filter(
+            (project: any) => project._id !== projectId
+          );
+        this.fetchDataMemberProject();
+      },
+    });
+  }
+
+
+  showTask(idProject:any){
+      this.idProject = idProject;
+    this.projectService.fetchDataDeltaiProject(idProject).subscribe({
+      next: (data) => {
+          this.taskProject = data.anProject.tasks
+      },
+
+      error: (err) => {
+        console.log(err.message);
+      },
+    });
+     this.formShowTask = true
+  }
+  confirmTask(idTask:any){
+    this.taskProjectService.confirmTaskProject(idTask).subscribe(() => {
+      this.showTask(this.idProject);
+    });
+  }
+
+  closeModelAddTask(){
+    this.formShowTask = false
+  }
+
 }

@@ -1,6 +1,7 @@
 const MemberProject = require('../../models/project/memberProject');
 const ProjectModel = require('../../models/project/projectModel');
 
+
 const memberProjectController = {
 
     getAllProjectMember: async (req, res) => {
@@ -49,7 +50,9 @@ const memberProjectController = {
          } catch (error) {
             res.status(500).json({ message: error.message });
          }
-    }
+    },
+      // update status working
+
 
 }
 module.exports = memberProjectController;

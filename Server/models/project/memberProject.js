@@ -12,13 +12,8 @@ const memberProjectSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Project',
         required: true,  
-        // nhận đô là 1 mảng id của
       }
     ],
-    status: {
-      type: Boolean,
-      default: true,
-    },
   },
   {
     timestamps: true,

@@ -1,1 +1,38 @@
-<p>main admin</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-15">
+      <h2>Danh Sách Thành Viên</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID Thành Viên</th>
+            <th>Email Thành Viên</th>
+            <th>Tên Thành Viên</th>
+            <th>Số Điện Thoại</th>
+            <th>Trạng Thái Làm Việc</th>
+            <th>Quyền</th>
+            <th>Tài Khoản</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let listDatas of listData">
+            <td>{{listDatas._id}}</td>
+            <td>{{listDatas.email}}</td>
+            <td>{{listDatas.fullname}}</td>
+            <td>{{listDatas.phoneNumber}}</td>
+            <td  [ngClass]="{
+              'text-success': listDatas.statusWorking,
+              'text-danger': !listDatas.statusWorking
+            }">{{listDatas.statusWorking ? "Đang làm việc" : "Bận"}}</td>
+            <td>{{listDatas.roles[0]}}</td>
+            <td>{{listDatas.status ? "Đã Xác Nhận" : "Chưa xác nhận"}}</td>
+            <td><button class="btn btn-primary"  (click)="updateRole(listDatas._id)" >Cấp Quyền</button></td>
+            <td><button class="btn btn-danger  ">Xóa tài khoản</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+/* .card{
+  width: 400px;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   z-index: 10;
+} */
+.list__user--project{
+  display: flex;
+  flex-wrap: wrap;
+
+}
+.user{
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  margin-block: 10px;
+  background-color: rgb(130, 177, 243);
+  padding: 10px;
+  border-radius: 5px;
+  flex-grow: 1;
+  margin-inline: 2px;
+cursor: pointer;
+color: #ffffff;
+}
+.user.selected {
+  background-color: #0075ff;
+  color: #fff;
+
+}
+.options__user{
+  width: 50px;
+}
+.container__task{
+  position: fixed;
+  top: 10%;
+  left: 25%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 50%;
+  z-index: 10;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}

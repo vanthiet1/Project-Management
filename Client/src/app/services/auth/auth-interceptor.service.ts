@@ -29,6 +29,12 @@ export class AuthInterceptorService {
     );
   }
 
-  
+  getAllUser(): Observable<any> {
+    return this.http.get<any>(`${this.URL_API}/auth/list/user`, {});
+  }
+  updateRoleMember(id:any): Observable<any> {
+    return this.http.put<any>(`${this.URL_API}/auth/role/${id}`, {});
+  }
+
 
 }

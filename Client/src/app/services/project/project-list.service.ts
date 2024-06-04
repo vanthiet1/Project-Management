@@ -13,6 +13,9 @@ export class ProjectService {
   fetchDataProject(): Observable<any> {
     return this.http.get<any>(`${this.URL_API}/project`);
   }
+  fetchDataDeltaiProject(projectId:any): Observable<any> {
+    return this.http.get<any>(`${this.URL_API}/project/${projectId}`);
+  }
 
   postProject(data:any):Observable<any> {
     return this.http.post<any>(`${this.URL_API}/project`,data);

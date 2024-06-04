@@ -1,31 +1,42 @@
-
 <div *ngIf="!isAdmin">
   <div class="container mt-5">
-    <h4 class="fw-bold">{{isAdmin ? "Thêm task cho nhân viên" : "Dự án của tôi"}}</h4>
+    <h4 class="fw-bold">{{isAdmin ? "Những thành viên đang làm việc " : "Dự án của tôi"}}</h4>
     <div class="list-group" *ngIf="memberDetailProject.employeeProjects?.length">
-      <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
-        *ngFor="let project of memberDetailProject.employeeProjects">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1"><strong>{{ project.nameProject }}</strong></h5>
-          <small class="text-muted">{{ project.dayStart | date: 'dd/MM/yyyy' }}</small>
+      <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer">
+        <div class="card my-3" *ngIf="showMemberProject">
+          <div class="card-header">
+            <h6><strong>Thành Viên Tham Gia Dự Án: <span style="color: red;"> - {{nameProject}}</span></strong></h6>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let memberProject of memberInProject ; let i = index" >
+              <span> <strong> <i> {{i + 1}} </i> </strong> - {{memberProject.fullname}} ( {{memberProject.statusWorking ? "Đang làm" : "Bận"}} )</span>
+            </li>
+          </ul>
         </div>
-        <p class="mb-1">
-          Trạng thái:
-          <span class=" text-success" [ngClass]="{
+        <div *ngFor="let project of memberDetailProject.employeeProjects">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><strong>{{ project.nameProject }}</strong></h5>
+            <small class="text-muted">{{ project.dayStart | date: 'dd/MM/yyyy' }}</small>
+          </div>
+          <p class="mb-1">
+            Trạng thái:
+            <span class=" text-success" [ngClass]="{
               'badge-success': project.statusProject,
               'badge-danger': !project.statusProject
             }">{{ project.statusProject ? 'Đang hoạt động' : 'Đã kết thúc' }}</span>
-        </p>
+          </p>
 
-        <div class="d-flex justify-content-end gap-2">
-          <div *ngIf="isAdmin">
-            <button class="btn btn-success">Thêm Task</button>
-          </div>
-          <div *ngIf="!isAdmin">
-            <button class="btn btn-success">Xem Task</button>
-          </div>
-          <div *ngIf="!isAdmin">
-            <button class="btn btn-warning" (click)="leaveProject(project._id)">Rời dự án</button>
+          <!--  -->
+          <div class="d-flex justify-content-end gap-2">
+            <div *ngIf="!isAdmin">
+              <button class="btn btn-primary" (click)="showTask(project._id)">Xem Task</button>
+            </div>
+            <div>
+              <button class="btn btn-success" (click)="showMemberInProject(project._id)">Người tham gia dự án</button>
+            </div>
+            <div *ngIf="!isAdmin">
+              <button class="btn btn-danger" (click)="leaveProject(project._id)">Rời dự án</button>
+            </div>
           </div>
         </div>
       </div>
@@ -38,42 +49,77 @@
 
 <div *ngIf="isAdmin">
   <div class="container mt-5">
-    <h4 class="fw-bold">{{isAdmin ? "Thêm task cho nhân viên" : "Dự án của tôi"}}</h4>
+    <h4 class="fw-bold">{{isAdmin ? "Những thành viên đang làm việc " : "Dự án của tôi"}}</h4>
     <div class="list-group" *ngIf="memberAllProject?.length ">
       <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
         *ngFor="let project of memberAllProject">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1"><strong>{{ project.employeeId.fullname }} ( {{ project.employeeId.statusWorking ? "Đang làm việc" : "Bận" }}  )</strong></h5>
-
+          <h5 class="mb-1"><strong>{{ project.employeeId.fullname }} ( {{ project.employeeId.statusWorking ? "Đang làm việc" : "Bận" }} ) </strong> </h5>
         </div>
-        <div *ngFor="let employeeProjects of project.employeeProjects">
-          <h5 class="mb-1"><strong>{{ employeeProjects.nameProject }}</strong></h5>
-        <small class="text-muted">{{ employeeProjects.dayStart | date: 'dd/MM/yyyy' }}</small>
-        <p class="mb-1">
-          Trạng thái:
-          <span class=" text-success" [ngClass]="{
-              'badge-success': employeeProjects.statusProject,
-              'badge-danger': !employeeProjects.statusProject
-            }">{{ employeeProjects.statusProject ? 'Đang hoạt động' : 'Đã kết thúc' }}</span>
-        </p>
-      </div>
-
-        <div class="d-flex justify-content-end gap-2">
-          <div *ngIf="isAdmin">
-            <button class="btn btn-success">Thêm Task</button>
+        <div *ngFor="let employeeProjects of project.employeeProjects" class="d-flex justify-content-between  align-items-center">
+          <h6 class="mb-1"><strong>{{ employeeProjects.nameProject }}</strong></h6>
+          <div>
+            <small class="text-muted">Thời gian: {{ employeeProjects.dayStart | date: 'dd/MM/yyyy' }}</small>
+            <p class="mb-1">
+              Trạng thái:
+              <span class=" text-success" [ngClass]="{
+                'text-success': employeeProjects.statusProject,
+                'text-danger': !employeeProjects.statusProject
+              }">{{ employeeProjects.statusProject ? 'Đang hoạt động' : 'Đã kết thúc' }}</span>
+            </p>
           </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2" >
           <div *ngIf="!isAdmin">
             <button class="btn btn-success">Xem Task</button>
           </div>
           <div *ngIf="!isAdmin">
-            <button class="btn btn-warning" (click)="leaveProject(project._id)">Rời dự án</button>
+            <button class="btn btn-success" (click)="leaveProject(project._id)">Rời dự án</button>
           </div>
         </div>
       </div>
     </div>
     <div *ngIf="!memberAllProject.length">
-      <p>Không có dự án nào được nhận.</p>
+      <p>Đang tải dữ liệu.</p>
     </div>
   </div>
 </div>
+
+
+  <div style="width: 50%;" class="container  container__task" *ngIf="formShowTask">
+    <div class="list-group" >
+    <h4 class="fw-bold">Công việc của tôi</h4>
+      <div *ngFor="let task of taskProject" class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
+    >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><strong>Task cần làm</strong> </h5>
+          <small class="text-muted">Hoàn thành Trước: {{task.startDateDeadline.split('T')[0] | date:'yyyy-MM-dd'}}</small>
+        </div>
+        <div >
+          <h5 class="mb-1"><strong>{{task.contentTask ? task.contentTask : "Chưa có task được giao"}}</strong></h5>
+          <p class="mb-1">
+            Trạng thái:
+            <span
+             class=" text-success"
+             [ngClass]="task.statusTask ? ' text-success' : ' text-danger'"
+             >
+             {{task.statusTask ? "Đã Hoàn Thành Task" : "Chưa Hoàn Thành"}}</span>
+          </p>
+        </div>
+        <div class="d-flex justify-content-end gap-2" >
+          <button class="btn btn-success" (click)="confirmTask(task._id)">Xác Nhận Xong</button>
+
+        </div>
+      </div>
+      <button class="btn btn-danger" (click)="closeModelAddTask()">Đóng</button>
+    </div>
+    <div *ngIf="!taskProject.length">
+      <p>Chưa có task nào được nhận</p>
+    </div>
+  </div>
+
+
+<!--  -->
+
 

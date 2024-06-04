@@ -3,6 +3,7 @@ const memberProjectController = require('../../controllers/projectController/mem
 
 router.get('/',memberProjectController.getAllProjectMember);
 router.get('/:id',memberProjectController.getInforProjectMember);
+
 router.delete('/:userId/:projectId',memberProjectController.leaveProject);
 
 module.exports = router

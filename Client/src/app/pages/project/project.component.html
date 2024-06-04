@@ -1,9 +1,9 @@
 <div class="main__project--team">
   <h4>Project</h4>
 </div>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-15">
       <h2>Danh sách dự án</h2>
 
       <table class="table table-striped">
@@ -13,6 +13,7 @@
             <th>Tên Dự án</th>
             <th>Ngày Bắt Đầu</th>
             <th>Kích Thước Nhóm</th>
+            <th>Chi phí dự án</th>
             <th>Trạng thái dự án</th>
             <th>Hành động</th>
           </tr>
@@ -23,6 +24,7 @@
             <td>{{projectsItem.nameProject}}</td>
             <td>{{projectsItem.dayStart.split('T')[0] | date:'yyyy-MM-dd'}}</td>
             <td>{{projectsItem.sizeTeam}}</td>
+            <td>{{formatFeeProject(projectsItem.feeProject)}}</td>
             <td [ngClass]="{'text-success': projectsItem.statusProject, 'text-danger': !projectsItem.statusProject}">
               {{projectsItem.statusProject ? "Đang thực hiện" : "Ngưng dự án" }}
             </td>
@@ -33,12 +35,17 @@
               <button type="button" class="btn btn-danger" style="margin-inline: 5px;" (click)="deleteProject(projectsItem._id)">
                 Xóa
               </button>
-              <button type="button" class="btn btn-success" style="margin-inline: 5px;" (click)="confirmProject(projectsItem._id)">
-                Xác Nhận
-              </button>
-              <button type="button" class="btn btn-warning" (click)="cancelProject(projectsItem._id)">
-                Hủy Dự Án
-              </button>
+
+              <button
+              type="button"
+              class="btn"
+              [ngClass]="projectsItem.statusProject ? 'btn-warning' : 'btn-success'"
+              style="margin-inline: 5px;"
+              (click)="toggleProjectStatus(projectsItem)"
+            >
+              {{ projectsItem.statusProject ? 'Hủy Dự Án' : 'Xác Nhận' }}
+            </button>
+             <button  *ngIf="isAdmin" class="btn btn-success" (click)="showAddTask(projectsItem._id)">Add Task</button>
             </td>
           </tr>
         </tbody>
@@ -71,6 +78,10 @@
               <label for="teamSize">Kích Thước Nhóm</label>
               <input type="number" class="form-control" id="teamSize" [(ngModel)]="teamSize" name="teamSize" />
             </div>
+            <div class="form-group">
+              <label for="feeProject">Chi phí dự án</label>
+              <input type="number" class="form-control" id="feeProject" [(ngModel)]="feeProject" name="feeProject" />
+            </div>
             <div class="list__user--project">
               <div
                 class="user"
@@ -92,6 +103,50 @@
           <button style="margin-inline: 5px;" type="button" class="btn btn-secondary" data-dismiss="modal"
             (click)="closeModal()">Đóng</button>
           <button type="button" class="btn btn-primary" (click)="addProject()">{{ isEditing ? 'Cập nhật' : 'Lưu' }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showModalAddTask"  class="modal__add--project">
+  <div id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="projectModalLabel">Thêm task</h5>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="projectName">Task</label>
+              <input type="text" class="form-control" id="contentTask"  name="contentTask" [(ngModel)]="contentTask" />
+            </div>
+            <div class="list__user--project">
+              <div
+                class="user"
+                *ngFor="let user of list"
+                [class.selected]="user.checked"
+                (click)="toggleUserSelection(user)"
+               >
+                <li>{{ user.fullname }}</li>
+                <input
+                  type="checkbox"
+                  class="options__user"
+                  [checked]="user.checked"
+                 >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="startDate">Thời Gian Hoàn Thành Task</label>
+              <input type="date" class="form-control" id="startDate" [(ngModel)]="startDateDeadline" name="startDate" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button (click)="closeModalAddTask()" style="margin-inline: 5px;" type="button" class="btn btn-secondary"
+           >Đóng</button>
+          <button type="button" class="btn btn-primary" (click)="addTaskProject()">Thêm Task</button>
         </div>
       </div>
     </div>

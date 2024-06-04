@@ -35,7 +35,7 @@ export class LoginComponent {
           console.error('Đăng nhập thất bại', error.message);
           if (error && error.error && error.error.message) {
             const errorMessage = error.error.message;
-            console.error('Thông báo lỗi từ máy chủ:', errorMessage);
+            alert(errorMessage)
           }
         }
       );

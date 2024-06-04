@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ProjectService } from '../../services/project/project-list.service';
 import { AuthInterceptorService } from '../../services/auth/auth-interceptor.service';
 import { IsLoginService } from '../../services/auth/isLogin.service';
-
+import { TaskProjectService } from '../../services/task/task.service';
 @Component({
   selector: 'app-project',
   standalone: true,
@@ -15,6 +15,7 @@ import { IsLoginService } from '../../services/auth/isLogin.service';
 })
 export class ProjectComponent implements OnInit {
   showModal = false;
+  showModalAddTask = false
   isLoading: boolean | undefined;
   error: string | undefined;
   isEditing: boolean = false;
@@ -24,10 +25,13 @@ export class ProjectComponent implements OnInit {
   projectName: string = '';
   startDate: string = '';
   teamSize: number = 0;
+  feeProject:number = 0
   list: Array<{ fullname: string; checked: boolean; _id: string; statusWorking:boolean }> = [];
   projects: any[] = [];
   selectedUsers: any[] = [];
-
+  contentTask:string | undefined
+  startDateDeadline:string = ''
+  selectedProjectId: string | null = null;
   // infor user
   isAdmin: boolean | undefined;
   inforUser: any = {};
@@ -38,7 +42,8 @@ export class ProjectComponent implements OnInit {
     //
     private authService: AuthInterceptorService,
     private isLoginService: IsLoginService,
-    private router: Router
+    private router: Router,
+    private taskProjectService: TaskProjectService
   ) {}
 
   ngOnInit(): void {
@@ -52,13 +57,28 @@ export class ProjectComponent implements OnInit {
     this.loadUserInfo();
   }
 
+  formatFeeProject(value: number): string {
+    return value.toLocaleString('en-US') + ' VND';
+  }
+
   toggleUserSelection(user: any) {
     user.checked = !user.checked;
   }
-
+// show model
   showModalAddProject() {
     this.showModal = true;
   }
+
+  showAddTask(projectId: string) {
+    this.selectedProjectId = projectId;
+    this.showModalAddTask = true;
+  }
+  closeModalAddTask(){
+    this.showModalAddTask = false;
+  }
+
+
+  //
   showForm(){
     this.showModal = true;
   }
@@ -118,6 +138,14 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  toggleProjectStatus(project: any) {
+    if (project.statusProject) {
+      this.cancelProject(project._id);
+    } else {
+      this.confirmProject(project._id);
+    }
+    project.statusProject = !project.statusProject;
+  }
   cancelProject(id: string): void {
     if (!this.isLoginService.isLogin() || !this.isAdmin ) {
       alert("Bạn không có quyền hủy dự án")
@@ -166,6 +194,7 @@ export class ProjectComponent implements OnInit {
         nameProject: this.projectName || null,
         dayStart: formattedDate || null,
         sizeTeam: this.teamSize || null,
+        feeProject: this.feeProject || null,
         teamProject: selectedUsers || null,
       };
 
@@ -193,12 +222,15 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+
+
   openModalForEdit(project: any) {
     this.isEditing = true;
     this.editingProjectId = project._id;
     this.projectName = project.nameProject;
     this.startDate = new Date(project.dayStart).toISOString().split('T')[0];
     this.teamSize = project.sizeTeam;
+    this.feeProject =  project.feeProject
 
     const projectTeamIds = project.teamProject.map((member: any) => member._id);
     this.list.forEach(user => {
@@ -206,6 +238,29 @@ export class ProjectComponent implements OnInit {
     });
     this.showModal = true;
   }
+  // postTaskProject
+  addTaskProject() {
+    const selectedUsers = this.list.filter(user => user.checked).map(user => user._id);
 
+    if (this.selectedProjectId) {
+      const formattedDate = new Date(this.startDateDeadline);
+      const newTaskProject = {
+      teamTask: selectedUsers || null,
+      idProjects: this.selectedProjectId || null,
+      contentTask: this.contentTask || null,
+      startDateDeadline: formattedDate || null,
+    };
+    console.log(newTaskProject);
 
+      this.taskProjectService.postTaskProject(newTaskProject).subscribe(
+        () => {
+          this.fetchData();
+          this.showModalAddTask = false
+        },
+        (error) => {
+          alert(error.error.message)
+        }
+      );
+    }
+}
 }
