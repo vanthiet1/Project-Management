@@ -52,7 +52,7 @@
     <h4 class="fw-bold">{{isAdmin ? "Những thành viên đang làm việc " : "Dự án của tôi"}}</h4>
     <div class="list-group" *ngIf="memberAllProject?.length ">
       <div class="list-group-item list-group-item-action flex-column align-items-start mb-3 cursor-pointer"
-        *ngFor="let project of memberAllProject">
+        *ngFor="let project of memberAllProject" >
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1"><strong>{{ project.employeeId.fullname }} ( {{ project.employeeId.statusWorking ? "Đang làm việc" : "Bận" }} ) </strong> </h5>
         </div>

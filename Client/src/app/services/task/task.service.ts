@@ -13,6 +13,10 @@ export class TaskProjectService {
   postTaskProject(data:any): Observable<any> {
     return this.http.post<any>(`${this.URL_API}/project/task/member/addtask`,data);
   }
+
+  getAllTaskProject(): Observable<any> {
+    return this.http.get<any>(`${this.URL_API}/project/task/member`,{});
+  }
   confirmTaskProject(id:any): Observable<any> {
     return this.http.put<any>(`${this.URL_API}/project/task/member/confirm/success/${id}`,{});
   }

@@ -12,25 +12,22 @@
       <span>Tóm tắt về team</span>
       <div class="quantity__member">
         <span>Số lượng thành viên</span>
-        <span>89</span>
+        <span>{{quantityMember}}</span>
       </div>
       <div class="total__price--project">
         <span>Tổng chi phí của tất cả dự án</span>
-        <span>89</span>
+        <span>{{allPriceTotalProject}}VND</span>
       </div>
       <div class="task__processing">
         <span>Các task đang xử lí</span>
-        <span>89</span>
+        <span>{{allTaskProject}}</span>
       </div>
-      <div class="project__deloyed">
-        <span>Dự án sắp triển khai</span>
-        <span>89</span>
-      </div>
+
     </div>
     <div class="customer__control">
       <span>Khách hàng</span>
-      <div class="customer__project">
-        <span>Website bán hàng</span>
+      <div class="customer__project" *ngFor="let name of nameProject">
+        <span>{{name}}</span>
       </div>
     </div>
    </div>

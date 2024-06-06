@@ -46,7 +46,6 @@
 }
 
   :is(
-    .total__price--project,
     .quantity__member,
     .task__processing,
     .project__deloyed,
@@ -59,16 +58,20 @@
   background-color: #fff;
   margin-block: 2px;
 }
-
+.total__price--project{
+  padding: 10px;
+  background-color: #fff;
+  margin-block: 2px;
+}
+.total__price--project > span{
+  display: block;
+}
 .quantity__member {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-.project__deloyed {
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
+
 .customer__control{
   padding: 10px;
 }

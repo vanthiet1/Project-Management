@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema(
     },
      status: {
         type: Boolean,
-        default: false,
+        default: true ,
     },
     roles: {
         type: [String],
